@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Build phase"
+      # Search for the word 'ECS' in index.html
+      - grep -q "ECS" index.html && echo "ECS found in index.html" || echo "ECS not found in index.html"
+      # Copy the index.html file to the artifact directory
+      - mkdir -p dist
+      - cp index.html dist/
+
+artifacts:
+  files:
+    - dist/index.html

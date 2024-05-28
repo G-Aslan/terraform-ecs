@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First App on ECS!</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #171a29;
+        }
+
+        .container {
+            text-align: center;
+            color: #fff;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 0;
+        }
+
+        .text {
+            font-size: 1.5em;
+            animation: text-appear 1s ease-in forwards;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes text-appear {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+            border-radius: 50%;
+            background-color: #f5365c;
+            animation: box-animate 1s infinite alternate ease-in-out;
+        }
+
+        .box:nth-child(2) {
+            background-color: #fcca44;
+            animation-delay: 0.2s;
+        }
+
+        .box:nth-child(3) {
+            background-color: #38d9a9;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes box-animate {
+            from {
+                transform: scale(0.8);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My First App</h1>
+        <p class="text">It's Running on ECS!</p>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+</body>
+</html>
