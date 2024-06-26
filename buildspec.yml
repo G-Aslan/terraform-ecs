@@ -4,12 +4,15 @@ phases:
   build:
     commands:
       - echo "Build phase"
-      # Search for the word 'ECS' in index.html
-      - grep -q "ECS" index.html && echo "ECS found in index.html" || echo "ECS not found in index.html"
-      # Copy the index.html file to the artifact directory
-      - mkdir -p dist
-      - cp index.html dist/
-
-artifacts:
-  files:
-    - dist/index.html
+      # Search for the word 'Hello World' in index.html
+      - grep -q "Hello World" index.html && echo "Hello World found in index.html" || { echo "Hello World not found in index.html"; exit 1; }
+      # Login to ECR
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 292029882946.dkr.ecr.us-east-1.amazonaws.com
+      # Build and tag Docker image if 'ECS' is found
+      - docker build -t hello-world .
+      # Tag Docker image for ECR
+      - docker tag hello-world:latest 292029882946.dkr.ecr.us-east-1.amazonaws.com/hello-world:latest
+      # Push Docker image to ECR
+      - docker push 292029882946.dkr.ecr.us-east-1.amazonaws.com/hello-world:latest
+      # Update ECS service with a rolling update
+      - aws ecs update-service --cluster GiladAslanCluster --service hello-world --force-new-deployment
