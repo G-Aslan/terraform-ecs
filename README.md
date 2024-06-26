@@ -1,36 +1,45 @@
-Resources:
-- VPC.
-- 4 Subnets - 2 Private subnets, 2 Public subnets and route tables.
-- Internet Gateway.
-- Security Groups - for ALB and ECS.
-- Application Load Balancer - Internet-facing (public subnets).
-- ECR - you may create the ECR repository manually and use data to import the existing resource.
-    - Build a "Hello World" docker image from a Dockerfile and push it to ECR.
-    - Private ECR (internal access).
-    - Encrypted ECR.
-    - Private endpoints.  (created by Terraform)
-- ECS -
-    - Task definition with a container - private subnets.
-    - Service with 2 desired containers.
+## Part 1: Terraform + VPC + ECS
 
-Notes: 
-- Resources should be highly available (2 AZs).
-- Application Load Balancer is the only resource that can be accessed from the Internet.
-- Use variable for all the dynamic parameters such as region, AZs, CIDR block ETC.
-- You may search Google for anything you need.
+This project involves setting up the following AWS resources:
 
-**TASK 2:**
+1. **VPC**
+2. **Subnets**
+   - 2 Private subnets
+   - 2 Public subnets
+   - Route tables for subnets
+3. **Internet Gateway**
+4. **Security Groups**
+   - For Application Load Balancer (ALB)
+   - For ECS
+5. **Application Load Balancer**
+   - Internet-facing (public subnets)
+6. **ECR (Elastic Container Registry)**
+   - Manually create the ECR repository and import the existing resource.
+   - Build a "Hello World" Docker image from a Dockerfile and push it to ECR.
+   - Private ECR (internal access)
+   - Encrypted ECR
+   - Private endpoints (created by Terraform)
+7. **ECS (Elastic Container Service)**
+   - Task definition with a container in private subnets
+   - Service with 2 desired containers
 
- Create an end-to-end CI/CD pipeline with Amazon ECR and AWS CodePipeline.
+### Notes
+- Resources should be highly available (2 Availability Zones).
+- The Application Load Balancer is the only resource accessible from the Internet.
 
-- CodeBuild:
-    - Create the CodeBuild service role.
-    - Create Build projects and buildspec.yaml that includes:
-        - docker build and tag with short commit ID.
-        - docker push to ECR.
-        - create a new task with the new image.
-        - update ECS service to use the new task.
-- CodePipeline:
-    - Create a new pipeline.
-    - Configure the branch to trigger the pipeline.
-    - Run CodeBuild with the Build projects.
+## Part 2: CI/CD Pipeline
+
+Create an end-to-end CI/CD pipeline with Amazon ECR and AWS CodePipeline.
+
+### CodeBuild
+1. Create the CodeBuild service role.
+2. Create Build projects and a `buildspec.yaml` that includes:
+   - Docker build and tag with short commit ID.
+   - Docker push to ECR.
+   - Create a new ECS task definition with the new image.
+   - Update ECS service to use the new task definition.
+
+### CodePipeline
+1. Create a new pipeline.
+2. Configure the branch to trigger the pipeline.
+3. Run CodeBuild with the Build projects.
