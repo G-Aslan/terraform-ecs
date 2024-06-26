@@ -7,7 +7,7 @@ variable "aws_access_key" {
 variable "aws_secret_key" {
   description = "AWS Secret Key"
   type        = string
-  default     = "ZeY7fj9+"
+  default     = ""
 }
 
 variable "aws_session_token" {
